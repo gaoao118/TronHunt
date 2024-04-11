@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tron.mapper.TxGoodAddressMapper">
+
+    <resultMap type="TxGoodAddress" id="TxGoodAddressResult">
+        <result property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="hexAddress" column="hex_address"/>
+        <result property="privateKey" column="private_key"/>
+        <result property="length" column="length"/>
+        <result property="createTime" column="create_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+    <sql id="selectTxGoodAddressVo">
+        select id, address, hex_address, private_key, length, create_time, del_flag
+        from tx_good_address
+    </sql>
+
+    <select id="selectTxGoodAddressList" parameterType="TxGoodAddress" resultMap="TxGoodAddressResult">
+        <include refid="selectTxGoodAddressVo"/>
+        <where>
+            <if test="address != null  and address != ''">and address = #{address}</if>
+            <if test="hexAddress != null  and hexAddress != ''">and hex_address = #{hexAddress}</if>
+            <if test="privateKey != null  and privateKey != ''">and private_key = #{privateKey}</if>
+            <if test="length != null ">and `length` = #{length}</if>
+            and del_flag = 0
+        </where>
+    </select>
+
+    <select id="selectTxGoodAddressById" parameterType="Long" resultMap="TxGoodAddressResult">
+        <include refid="selectTxGoodAddressVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTxGoodAddress" parameterType="TxGoodAddress">
+        insert into tx_good_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="hexAddress != null and hexAddress != ''">hex_address,</if>
+            <if test="privateKey != null and privateKey != ''">private_key,</if>
+            <if test="length != null">`length`,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="hexAddress != null and hexAddress != ''">#{hexAddress},</if>
+            <if test="privateKey != null and privateKey != ''">#{privateKey},</if>
+            <if test="length != null">#{length},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTxGoodAddress" parameterType="TxGoodAddress">
+        update tx_good_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="hexAddress != null and hexAddress != ''">hex_address = #{hexAddress},</if>
+            <if test="privateKey != null and privateKey != ''">private_key = #{privateKey},</if>
+            <if test="length != null">`length` = #{length},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateGoodAddressByDelFlag">
+        update tx_good_address
+        set del_flag = 2
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTxGoodAddressById" parameterType="Long">
+        delete
+        from tx_good_address
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteTxGoodAddressByIds" parameterType="String">
+        delete from tx_good_address where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

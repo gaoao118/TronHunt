@@ -35,6 +35,11 @@
             <artifactId>ruoyi-common</artifactId>
         </dependency>
 
+        <!--波场模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>tron-hunt</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

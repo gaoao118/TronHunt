@@ -64,7 +64,7 @@ spring:
   devtools:
     restart:
       # 热部署开关
-      enabled: true
+      enabled: false
   # redis 配置
   redis:
     # 地址
@@ -93,7 +93,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌密钥
-  secret: abcdefghijklmnopqrstuvwxyz
+  secret: UF$^ygfkypEjmdTxZwACbGKEdnRtn2NB
   # 令牌有效期（默认30分钟）
   expireTime: 30
 
